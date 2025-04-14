@@ -61,4 +61,4 @@ pipeline {                                    // 1  // Defines the start of the 
                 }                             // 13  // Ends the script block for the Quality Gate stage
             }                                 // 12  // Ends the steps block for 'Quality Gate' stage
         }                                     // 11  // Ends the 'Quality Gate' stage
-
+}
