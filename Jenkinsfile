@@ -44,6 +44,7 @@ pipeline {                                    // 1  // Defines the start of the 
                 }                             // Ends the withSonarQubeEnv block
             }                                 // 10  // Ends the steps block for 'SonarQube analysis' stage
         }                                     // 8  // Ends the 'SonarQube analysis' stage
+
         stage("Quality Gate") {               // 11  // Creates a stage named 'Quality Gate'
             steps {                           // 12  // Defines the steps that will be executed in this stage
                 script {                      // 13  // Allows running custom Groovy script inside the pipeline
@@ -59,4 +60,5 @@ pipeline {                                    // 1  // Defines the start of the 
                     }
                 }                             // 13  // Ends the script block for the Quality Gate stage
             }                                 // 12  // Ends the steps block for 'Quality Gate' stage
-        }   
+        }                                     // 11  // Ends the 'Quality Gate' stage
+
