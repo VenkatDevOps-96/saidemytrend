@@ -48,22 +48,20 @@ pipeline {                                    // 1  // Defines the start of the 
             }                                 // 10  // Ends the steps block for 'SonarQube analysis' stage
         }                                     // 8  // Ends the 'SonarQube analysis' stage
 
-        stage("Quality Gate") {               // 11  // Creates a stage named 'Quality Gate'
-            steps {                           // 12  // Defines the steps that will be executed in this stage
-                script {                      // 13  // Allows running custom Groovy script inside the pipeline
-                    timeout(time: 1, unit: 'HOURS') {  
-                                              // Sets a timeout of 1 hour for the quality gate check
-                        def qg = waitForQualityGate()  
-                                              // Waits for the quality gate result from SonarQube
-                        if (qg.status != 'OK') {  
-                                              // Checks if the quality gate status is not OK
-                            echo "Warning: Quality gate failed but continuing pipeline: ${qg.status}"  
-                                              // Aborts the pipeline if the quality gate fails
-                        }
-                    }
-                }                             // 13  // Ends the script block for the Quality Gate stage
-            }                                 // 12  // Ends the steps block for 'Quality Gate' stage
-        }                                     // 11  // Ends the 'Quality Gate' stage
+        stage("Quality Gate") {
+    steps {
+        script {
+            timeout(time: 1, unit: 'HOURS') {
+                def qg = waitForQualityGate()
+                if (qg.status != 'OK') {
+                    echo "⚠️ Quality Gate failed: ${qg.status}"
+                    // Optional: Don't fail the build here
+                    // error "Build failed due to Quality Gate"
+                }
+            }
+        }
+    }
+}
 
         stage("Jar Publish") {                // 14  // Creates a stage named 'Jar Publish'
             steps {                           // 15  // Defines the steps that will be executed in this stage
